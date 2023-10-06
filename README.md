@@ -5,8 +5,9 @@
 [![CodeQL](https://github.com/asjadenet/tiit_cpp/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/asjadenet/tiit_cpp/actions/workflows/codeql-analysis.yml)
 
 ## About tiit_cpp
-let's try to use my modified cmake_template fork
+My modified cmake_template fork: https://github.com/asjadenet/cmake_template
 
+I'll keep it to see if all the tests pass.
 
 ## More Details
 
