@@ -10,7 +10,7 @@ on:
       - develop
 
 env:
-  CLANG_TIDY_VERSION: "15.0.3"
+  CLANG_TIDY_VERSION: "15.0.7"
   VERBOSE: 1
 
 
@@ -31,10 +31,10 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-20.04
-          - macos-latest
+          - macos-13
           - windows-2019
         compiler:
-          # you can specify the version after `-` like "llvm-15.0.3".
+          # you can specify the version after `-` like "llvm-15.0.7".
           - llvm-15.0.7
           - gcc-11
           - gcc-13
