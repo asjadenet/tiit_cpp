@@ -10,7 +10,7 @@ on:
       - develop
 
 env:
-  CLANG_TIDY_VERSION: "15.0.7"
+  CLANG_TIDY_VERSION: "15.0.3"
   VERBOSE: 1
 
 
@@ -31,11 +31,11 @@ jobs:
         os:
           - ubuntu-latest
           - ubuntu-20.04
-          - macos-13
+          - macos-latest
           - windows-2019
         compiler:
-          # you can specify the version after `-` like "llvm-15.0.7".
-          - llvm-15.0.7
+          # you can specify the version after `-` like "llvm-15.0.3".
+          - llvm-15.0.3
           - gcc-11
           - gcc-13
         generator:
@@ -68,7 +68,7 @@ jobs:
             gcov_executable: gcov-13
             enable_ipo: On            
 
-          - compiler: llvm-15.0.7
+          - compiler: llvm-15.0.3
             enable_ipo: Off
             gcov_executable: "llvm-cov gcov"
 
