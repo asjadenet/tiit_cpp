@@ -190,7 +190,7 @@ jobs:
         if: runner.os == 'Windows'
         working-directory: ./build
         run: |
-          OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C ${{matrix.build_type}}
+          if (OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C ${{matrix.build_type}} ) { Get-ChildItem test\*.xml | ForEach-Object { if ((Get-Content $_) -match '<Expression success="false"') { Get-Content $_ } } }
 
       - name: CPack
         if: matrix.package_generator != ''
