@@ -125,7 +125,10 @@ jobs:
             enable_ipo: On
             build_shared: On
 
-
+    permissions:
+      contents: read
+      checks: write
+      id-token: write 
     steps:
       - name: Check for llvm version mismatches
         if: ${{ contains(matrix.compiler, 'llvm') && !contains(matrix.compiler, env.CLANG_TIDY_VERSION) }}
@@ -186,11 +189,7 @@ jobs:
 
       - name: Unix - Test Report
         uses: mikepenz/action-junit-report@v4  
-        if: runner.os != 'Windows'   
-        permissions:
-          contents: read
-          checks: write
-          id-token: write        
+        if: runner.os != 'Windows'          
         with:
           report_paths: 'build/test/*.xml'
 
