@@ -188,11 +188,10 @@ jobs:
 
       - name: Unix - Test Report
         uses: dorny/test-reporter@v1      
-        if: runner.os != 'Windows'
-        working-directory: ./build      
+        if: runner.os != 'Windows'      
         with:
           name: test-results
-          path: test/*.xml
+          path: build/test/*.xml
           reporter: jest-junit        # Format of test results
 
       - name: Windows - Test and coverage
