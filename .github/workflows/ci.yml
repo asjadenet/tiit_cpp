@@ -187,10 +187,9 @@ jobs:
           gcovr -j ${{env.nproc}} --delete --root ../ --print-summary --xml-pretty --xml coverage.xml . --gcov-executable '${{ matrix.gcov_executable }}'
 
       - name: Unix - Test Report
+        uses: dorny/test-reporter@v1      
         if: runner.os != 'Windows'
         working-directory: ./build      
-        uses: dorny/test-reporter@v1
-        if: success() || failure()    # run this step even if previous step failed                        
         with:
           name: test-results
           path: test/*.xml
