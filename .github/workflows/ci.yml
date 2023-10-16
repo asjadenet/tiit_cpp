@@ -188,7 +188,7 @@ jobs:
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: always()
+        if: runner.os != 'Windows'
         with:
           files: build/test/*.xml
       
