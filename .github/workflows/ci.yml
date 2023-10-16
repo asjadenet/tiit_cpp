@@ -134,7 +134,7 @@ jobs:
           script: |
             core.setFailed('There is a mismatch between configured llvm compiler and clang-tidy version chosen')
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Cache
         uses: ./.github/actions/setup_cache
@@ -185,12 +185,10 @@ jobs:
           ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<failure' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)
 
       - name: Unix - Test Report
-        uses: dorny/test-reporter@v1.6.0    
+        uses: mikepenz/action-junit-report@v4  
         if: runner.os != 'Windows'      
         with:
-          name: test-results
-          path: build/test/*.xml
-          reporter: jest-junit        # Format of test results
+          report_paths: 'build/test/*.xml'
 
       - name: Unix - Coverage
         if: runner.os != 'Windows'
