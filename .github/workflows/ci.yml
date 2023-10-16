@@ -182,13 +182,14 @@ jobs:
           
       - name: Unix - Test
         if: runner.os != 'Windows'
+        continue-on-error: true
         working-directory: ./build
         run: |
           ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<failure' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
-        if: runner.os != 'Windows'
+        if: always() && runner.os != 'Windows'
         with:
           files: build/test/*.xml
       
