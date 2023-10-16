@@ -183,14 +183,22 @@ jobs:
         # Execute tests defined by the CMake configuration.
         # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: |
-          ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<OverallResult success="false"' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)          
+          ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<failure' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)          
           gcovr -j ${{env.nproc}} --delete --root ../ --print-summary --xml-pretty --xml coverage.xml . --gcov-executable '${{ matrix.gcov_executable }}'
+      - name: Unix - Upload test results
+          uses: dorny/test-reporter@v1
+          if: runner.os != 'Windows'              
+          working-directory: ./build
+          with:
+            name: test-results
+            path: test/*.xml
+            reporter: jest-junit        # Format of test results
 
       - name: Windows - Test and coverage
         if: runner.os == 'Windows'
         working-directory: ./build
         run: |
-          if (OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C ${{matrix.build_type}} ) { Get-ChildItem test\*.xml | ForEach-Object { if ((Get-Content $_) -match '<Expression success="false"') { Get-Content $_ } } }
+          if (OpenCppCoverage.exe --export_type cobertura:coverage.xml --cover_children -- ctest -C ${{matrix.build_type}} ) { Get-ChildItem test\*.xml | ForEach-Object { if ((Get-Content $_) -match '<failure') { Get-Content $_ } } }
 
       - name: CPack
         if: matrix.package_generator != ''

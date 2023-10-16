@@ -49,11 +49,10 @@ endif()
 # to whatever you want, or use different for different binaries
 catch_discover_tests(
   tests
-  EXTRA_ARGS -r junit
   TEST_PREFIX
   "unittests."
   REPORTER
-  XML
+  junit
   OUTPUT_DIR
   .
   OUTPUT_PREFIX
@@ -72,11 +71,10 @@ target_link_libraries(
 
 catch_discover_tests(
   constexpr_tests
-  EXTRA_ARGS -r junit
   TEST_PREFIX
   "constexpr."
   REPORTER
-  XML
+  junit
   OUTPUT_DIR
   .
   OUTPUT_PREFIX
@@ -97,11 +95,10 @@ target_compile_definitions(relaxed_constexpr_tests PRIVATE -DCATCH_CONFIG_RUNTIM
 
 catch_discover_tests(
   relaxed_constexpr_tests
-  EXTRA_ARGS -r junit
   TEST_PREFIX
   "relaxed_constexpr."
   REPORTER
-  XML
+  junit
   OUTPUT_DIR
   .
   OUTPUT_PREFIX
