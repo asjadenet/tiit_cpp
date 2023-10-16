@@ -192,6 +192,9 @@ jobs:
         if: runner.os != 'Windows'          
         with:
           report_paths: 'build/test/*.xml'
+          detailed_summary: true
+          fail_on_failure: true
+          annotate_notice: true
 
       - name: Unix - Coverage
         if: runner.os != 'Windows'
