@@ -185,7 +185,7 @@ jobs:
           ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<failure' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)
 
       - name: Unix - Test Report
-        uses: dorny/test-reporter@v1      
+        uses: dorny/test-reporter@v1.6.0    
         if: runner.os != 'Windows'      
         with:
           name: test-results
