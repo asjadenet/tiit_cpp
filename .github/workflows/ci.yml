@@ -176,7 +176,7 @@ jobs:
         # Execute the build.  You can specify a specific target with "--target <NAME>"
         run: |
           cmake --build ./build --config ${{matrix.build_type}}
-
+          
       - name: Unix - Test and coverage
         if: runner.os != 'Windows'
         working-directory: ./build
@@ -185,13 +185,16 @@ jobs:
         run: |
           ctest -C ${{matrix.build_type}} || (exit_code=$? && echo exitcode: $exit_code && for xml_file in test/*.xml; do if grep -q '<failure' "$xml_file"; then cat "$xml_file"; fi; done && exit $exit_code)          
           gcovr -j ${{env.nproc}} --delete --root ../ --print-summary --xml-pretty --xml coverage.xml . --gcov-executable '${{ matrix.gcov_executable }}'
-        - name: Test Report
-          uses: dorny/test-reporter@v1
-          if: success() || failure()    # run this step even if previous step failed                        
-          with:
-            name: test-results
-            path: test/*.xml
-            reporter: jest-junit        # Format of test results
+
+      - name: Unix - Test Report
+        if: runner.os != 'Windows'
+        working-directory: ./build      
+        uses: dorny/test-reporter@v1
+        if: success() || failure()    # run this step even if previous step failed                        
+        with:
+          name: test-results
+          path: test/*.xml
+          reporter: jest-junit        # Format of test results
 
       - name: Windows - Test and coverage
         if: runner.os == 'Windows'
