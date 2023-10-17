@@ -127,8 +127,10 @@ jobs:
 
     permissions:
       contents: read
+      issues: read
       checks: write
-      id-token: write 
+      pull-requests: write
+      
     steps:
       - name: Check for llvm version mismatches
         if: ${{ contains(matrix.compiler, 'llvm') && !contains(matrix.compiler, env.CLANG_TIDY_VERSION) }}
@@ -164,7 +166,6 @@ jobs:
           vcpkg: false
           ccache: true
           clangtidy: ${{ env.CLANG_TIDY_VERSION }}
-
 
           cppcheck: true
 
@@ -218,7 +219,6 @@ jobs:
         with:
           files: |
             build/*-*${{ matrix.build_type }}*-*.*
-
 
       - name: Publish to codecov
         uses: codecov/codecov-action@v3
